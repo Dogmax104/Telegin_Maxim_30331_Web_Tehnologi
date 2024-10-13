@@ -1,0 +1,42 @@
+.text1 {
+    color: blue;
+    font-size: 80px;
+}
+
+html {
+    font-size: 15px;
+}
+
+header, footer {
+    background-color: rgba(var(--bs-dark-rgb));
+}
+
+.nav-color {
+    color: rgba(255, 255, 255, 0.5)
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    font-size:30px;
+}
+
+    .checkbox-container input[type="checkbox"] {
+        margin-right: 60px; /* Отступ слева от чекбокса */
+        width:20px;
+        height:20px;
+    }
+
+.listcheck1{
+    font-size :15px;
+    color:red;
+}
+
+
+
+
+
+
+
+
+
