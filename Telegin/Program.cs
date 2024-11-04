@@ -4,6 +4,9 @@ using Telegin.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var userName = builder.Configuration["UserData:UserName"];
+var userData = builder.Configuration.GetSection("UserData").Get<UserData>();
+
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -41,3 +44,12 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
+
+public class UserData
+{
+    public string UserName { get; set; }
+    public int PageSize { get; set; }
+}
+
+
+

@@ -1,88 +1,41 @@
-﻿
-@{
-    Layout = null;
+﻿@{
+    ViewBag.Title = "Index";
 }
-
-<!DOCTYPE html>
-
-<html>
-<head> 
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Telegin</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/font-awesome/css/fontawesome.css"/>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Telegin.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/font-awesome/css/fontawesome.min.css"/>
-    <link rel="stylesheet" href="~/font-awesome/css/solid.css"/>
-    <link rel="stylesheet" href="~/css/CheckboxTeleginExample.css"/>
-    <title>Maxim_Telegin</title>
-</head>
-
-<body>
-<header>
-    <!-- Панель навигации -->
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <!-- меню сайта -->
-        <a class="navbar-brand" href="#">WebLabsV03</a>
-        <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="#">Лб 1</a>
-            <a class="nav-item nav-link" href="#">Каталог</a>
-            <a class="nav-item nav-link" href="#">Администрирование</a>
-        </div>
-        <!-- меню сайта - конец -->
-        <!-- Информация пользователя -->
-        <a href="#" class="navbar-text ms-auto">
-            00,0 руб <i class="fa-solid fa-cart-shopping"></i> (0)
-        </a>
-        <div class="dropdown ms-4 nav-color">
-            <button class="btn btn-secondary dropdown-toggle"
-                    type="button" id="dropdownMenuButton"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                User@gmail.com
-                <img src="images/default-profile-picture.png" width="30"
-                     alt="User" class="rounded nav-color" />
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li>
-                    <span class="dropdown-item-text">
-                        <img src="images/default-profile-picture.png"
-                             width="50" alt="User" class="rounded" />
-                        user@gmail.com
-                    </span>
-                </li>
-                <li><hr class="dropdown-divider"></li>
-                <li>
-                    <form id="logoutForm" class="form-inline" action="#">
-                        <button id="logout" type="submit" class="nav-link btn btn-link text-dark">
-                            Logout
-                        </button>
-                    </form>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    </header><!-- header - конец -->
     <main class="container">
-        <h1> Лабораторная работа 1</h1>
+    <h1> @ViewData["Lab2_Text"] </h1>
         <h2> Список </h2>
-        <ol type="A" style="margin-left:50px" class="listcheck1">
-            <li> элемент 0 списка;</Li>
-            <li> элемент 1 списка;</Li>
-            <li> элемент 2 списка;</Li>
-            <li> элемент 3 списка;</Li>
-            <li> элемент 4 списка;</Li>
+
+        @* Here apply Razor, list include metod "for" *@
+        @{
+        var items = new List<string> { "Элемент 0", "Элемент 1", "Элемент 2", "Элемент 3", "Элемент 4"};
+        }
+        <ol style="margin-left:50px" class="listcheck1">
+            @for(var i=0; i<items.Count; i++)
+            {
+                <li>@items[i]</li>
+            }
         </ol>
-            <p style="margin-bottom:70px"> </p>
+
+        <p style="margin-bottom:70px"> </p>
         <hr />
         <div>
             <h2>Форма</h2>
 
+            @* Here hiden list *@
+        @* <select style="margin-left:60px" class="form-select" aria-label="Default select example"
+            <option selected>Item1</option>
+            <option value="1">Item2</option>
+            <option value="2">Item3</option>
+        </select> *@
             @* Checkbox. I did it myself *@
             <p style="margin-bottom:60px"></p>
-            <form style="margin-left:50px" action="https://localhost:7023/" method="get" >
+        <form method="post" action="https://localhost:7023/" style="margin-left:50px">
+
+                @* Here hiden list var2 *@
+                <select id="_listData" name="_listData" asp-items="ViewBag.Item" style="margin-left:60px"
+                        class="form-select">
+                </select>
+
                 <p>
                     <label class="checkbox-container">
                         <input type="checkbox" id="checkbox1"/>
@@ -136,71 +89,12 @@
                     </div>
                 </div>
                 @* Button "send", it is copy from http://www.getbootstrap.com *@
-                <button type="submit" class="btn btn-info" style="margin-bottom:60px">Send</button>
+                @* <button type="submit" class="btn btn-info" style="margin-bottom:60px">Send</button> *@
+                
+                @* Created button, send massage. *@
+                <input type="submit" value="SEND"/>
             </form>
         </div>  
 
     </main>
 
-
-
-
-
-    @* <footer>
-       <div class="container">
-            <span class="nav-color">Подвал страницы</span>
-        </div>
-        <div class="navbar navbar-dark navbar-expand-md bg-dark">
-            <div class="navbar-nav ms-auto">
-                <a class="nav-item nav-link" href="http://www.facebook.com">
-                    <i class="fa-brands fa-facebook-f fa-2x"></i>
-                </a>
-                <a class="nav-item nav-link" href="http://www.vk.com">
-                    <i class="fa-brands fa-vk fa-2x"></i>
-                </a>
-                <a class="nav-item nav-link" href="http://www.twitter.com">
-                    <i class="fa-brands fa-twitter fa-2x"></i>
-                </a>
-            </div>
-        </div>
-    </footer> *@
-
-
-    @* It is foter my Kiss *@
-    <footer>
-    <div class="container">
-         <span class="nav-color">Подвал страницы</span>
-     </div>
-     <div class="navbar navbar-dark navbar-expand-md bg-dark">
-         <div class="navbar-nav ms-auto">
-             <a class="nav-item nav-link" href="http://www.facebook.com">
-                <i class="fa-brands fa-facebook-f fa-2x"> 
-                    <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-                        <path
-                            d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"></path>
-                    </svg>
-                </i>
-             </a>
-             @* VK is't not found *@
-             @* <a class="nav-item nav-link" href="http://www.vk.com">
-                 <i class="fa-brands fa-vk fa-2x"></i>
-             </a> *@
-             <a class="nav-item nav-link" href="http://www.twitter.com">
-                <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                    <path
-                        d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
-                </svg>
-                 <i class="fa-brands fa-twitter fa-2x"></i>
-             </a>
-         </div>
-     </div>
- </footer>
-
-
-
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-</body>
-</html>
