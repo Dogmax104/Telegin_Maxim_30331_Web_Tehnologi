@@ -1,0 +1,33 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+    <!-- Панель навигации -->
+    
+        <!-- меню сайта -->
+        <a class="navbar-brand" href="#">WebLabsV03</a>
+
+        @* This first version *@
+        @* <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="#">Лб 1</a>
+        <a class="nav-item nav-link" href="#">Каталог</a>
+        <a class="nav-item nav-link" href="#">Администрирование</a>
+        </div> *@
+
+
+@{
+    var controller = ViewContext?.RouteData?.Values["controller"]?.ToString()?.ToLower() ?? String.Empty;
+}
+
+
+@* This is second version my project for task. Task tag-halper, labs 2 *@
+<div class="navbar-nav">
+    <a class="nav-item nav-link @(controller=="home"?"active":"")" asp-controller="HomeController"
+       asp-action="Index" />Лб1
+    <a class="nav-item nav-link" asp-controller="Product" asp-action="Index" />Каталог
+    <a class="nav-item nav-link" asp-area="Admin" asp-page="/Index" />Администрирование
+    <a class="nav-item nav-link" asp-controller="Cart" asp-action="Index" />Корзина
+    <a class="nav-item nav-link" asp-area="Identity" asp-page="/Account/Logout" />Logout
+</div>
+

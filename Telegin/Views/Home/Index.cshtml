@@ -29,7 +29,7 @@
         </select> *@
             @* Checkbox. I did it myself *@
             <p style="margin-bottom:60px"></p>
-        <form method="post" action="https://localhost:7023/" style="margin-left:50px">
+            <form method="post" action="https://localhost:7023/" style="margin-left:50px">
 
                 @* Here hiden list var2 *@
                 <select id="_listData" name="_listData" asp-items="ViewBag.Item" style="margin-left:60px"
@@ -73,7 +73,7 @@
                         Login
                     </label>
                     <div class="col-sm-10" style="margin-bottom:20px">
-                        <input type="email" class="form-control form-control-lg" id="RowLogin"
+                        <input name="Login" type="email" class="form-control form-control-lg" id="RowLogin"
                             placeholder="Login">
                     </div>
                 </div>
@@ -84,7 +84,7 @@
                         Password
                     </label>
                     <div class="col-sm-10">
-                        <input type="password" class="form-control form-control-lg" id="RowPassword"
+                        <input name="password" type="password" class="form-control form-control-lg" id="RowPassword"
                             placeholder="Password" style="margin-bottom:20px">
                     </div>
                 </div>
