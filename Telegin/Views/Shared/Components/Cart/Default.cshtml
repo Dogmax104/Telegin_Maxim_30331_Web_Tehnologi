@@ -1,0 +1,29 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@* <div>
+    <a class="nav-item nav-link" asp-controller="Cart" asp-action="Index" />Корзина
+    <ul> @foreach (var item in Model.Items) 
+        { 
+            <li>@item.Name - @item.Price руб.   
+            </li>
+        }
+    </ul>
+
+</div> *@
+
+
+@* //////////////////////////////////////////////////////////////////////////////////////////// *@
+@* here will be hiden button *@
+
+<select class="form-select" aria-label="Default select example">
+    <option selected>Корзина</option>
+    @foreach (var item in Model.Items)
+    {
+        <option value="@item.Name">@item.Name - @item.Price руб.</option>
+    }
+</select>
+
+

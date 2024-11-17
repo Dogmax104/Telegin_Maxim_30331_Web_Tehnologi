@@ -22,12 +22,15 @@
 
 
 @* This is second version my project for task. Task tag-halper, labs 2 *@
-<div class="navbar-nav">
-    <a class="nav-item nav-link @(controller=="home"?"active":"")" asp-controller="HomeController"
-       asp-action="Index" />Лб1
-    <a class="nav-item nav-link" asp-controller="Product" asp-action="Index" />Каталог
-    <a class="nav-item nav-link" asp-area="Admin" asp-page="/Index" />Администрирование
-    <a class="nav-item nav-link" asp-controller="Cart" asp-action="Index" />Корзина
-    <a class="nav-item nav-link" asp-area="Identity" asp-page="/Account/Logout" />Logout
+
+<div class="navbar-nav d-flex align-items-center">
+    <a class="nav-item nav-link @(controller=="home"?"active":"")" asp-controller="HomeController" asp-action="Index">Лб1</a>
+    <a class="nav-item nav-link" asp-controller="Product" asp-action="Index">Каталог</a>
+    <a class="nav-item nav-link" asp-area="Admin" asp-page="/Index">Администрирование</a>
+    <span class="nav-item nav-link">
+        @await Component.InvokeAsync("Cart")
+    </span>
+    <a class="nav-item nav-link" asp-area="Identity" asp-page="/Account/Logout">Logout</a>
 </div>
+
 
