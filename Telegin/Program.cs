@@ -1,20 +1,34 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Telegin.Data;
+using Telegin.UI.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//Пароль будет простой, содержащий простые символы и т.д.
+builder.Services.AddDbContext<ApplicationDbContext>(options => 
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); 
+builder.Services.AddDefaultIdentity<IdentityUser>(options => 
+{   options.Password.RequireDigit = false; 
+    options.Password.RequireLowercase = false; 
+    options.Password.RequireUppercase = false; 
+    options.Password.RequireNonAlphanumeric = false; 
+    options.Password.RequiredLength = 1; }).AddEntityFrameworkStores<ApplicationDbContext>();
+
 
 var userName = builder.Configuration["UserData:UserName"];
 var userData = builder.Configuration.GetSection("UserData").Get<UserData>();
 
-// Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+// Add services to the container.                                                                               
+var connectionString = builder.Configuration.GetConnectionString("SqLiteConnection") 
+    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlite(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
