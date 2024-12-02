@@ -1,19 +1,32 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using Telegin.Data;
 using Telegin.UI.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//Пароль будет простой, содержащий простые символы и т.д.
-builder.Services.AddDbContext<ApplicationDbContext>(options => 
-options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => 
-{   options.Password.RequireDigit = false; 
-    options.Password.RequireLowercase = false; 
-    options.Password.RequireUppercase = false; 
-    options.Password.RequireNonAlphanumeric = false; 
-    options.Password.RequiredLength = 1; }).AddEntityFrameworkStores<ApplicationDbContext>();
+////Пароль будет простой, содержащий простые символы и т.д.
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequiredLength = 1;
+}).AddEntityFrameworkStores<ApplicationDbContext>();
+
+//// Добавлена политика авторизации – проверка, что утверждение «role» имеет значение «admin»
+builder.Services.AddAuthorization(opt =>
+{
+    opt.AddPolicy("admin", p =>
+    p.RequireClaim(ClaimTypes.Role, "admin"));
+});
+
+// Регистрация NoOpEmailSender в качестве IEmailSender
+builder.Services.AddSingleton<IEmailSender, NoOpEmailSender>();
+
 
 
 var userName = builder.Configuration["UserData:UserName"];
@@ -25,9 +38,6 @@ var connectionString = builder.Configuration.GetConnectionString("SqLiteConnecti
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
 
@@ -64,6 +74,3 @@ public class UserData
     public string UserName { get; set; }
     public int PageSize { get; set; }
 }
-
-
-
