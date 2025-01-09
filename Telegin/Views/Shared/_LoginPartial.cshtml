@@ -1,7 +1,9 @@
-﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
+﻿ @using Microsoft.AspNetCore.Identity
+@using Telegin.UI.Models
+@inject SignInManager<LocalUser> SignInManager
+@inject UserManager<LocalUser> UserManager
 
+@* Нужно определить куда можно использовать код *@
 <ul class="navbar-nav">
       @if (SignInManager.IsSignedIn(User))  
 {
@@ -25,4 +27,4 @@ else
         <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
     </li>
 }
-</ul>
+</ul> 

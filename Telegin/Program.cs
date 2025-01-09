@@ -3,12 +3,16 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Telegin.Data;
+using Telegin.UI.Models;
 using Telegin.UI.Data;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-////Пароль будет простой, содержащий простые символы и т.д.
-builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+
+////пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅ.пїЅ.
+///РЅР°СЃС‚СЂРѕРёРєРё РїРѕСЂРѕР»СЏ;
+builder.Services.AddDefaultIdentity<LocalUser>(options =>
 {
     options.Password.RequireDigit = false;
     options.Password.RequireLowercase = false;
@@ -17,26 +21,35 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     options.Password.RequiredLength = 1;
 }).AddEntityFrameworkStores<ApplicationDbContext>();
 
-//// Добавлена политика авторизации – проверка, что утверждение «role» имеет значение «admin»
-builder.Services.AddAuthorization(opt =>
+//// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅroleпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅadminпїЅ
+builder.Services.AddAuthorization(options =>
 {
-    opt.AddPolicy("admin", p =>
-    p.RequireClaim(ClaimTypes.Role, "admin"));
+    options.AddPolicy("RequireAdminRole", police =>
+    police.RequireRole( "admin"));
 });
 
-// Регистрация NoOpEmailSender в качестве IEmailSender
+builder.Services.AddRazorPages();
 builder.Services.AddSingleton<IEmailSender, NoOpEmailSender>();
+//builder.Logging.AddFile("Logs/app-{Date}.txt");
+
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ NoOpEmailSender пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ IEmailSender
 
 
-
-var userName = builder.Configuration["UserData:UserName"];
-var userData = builder.Configuration.GetSection("UserData").Get<UserData>();
 
 // Add services to the container.                                                                               
 var connectionString = builder.Configuration.GetConnectionString("SqLiteConnection") 
     ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString));
+
+//builder.Services.AddDefaultIdentity<LocalUser>()
+//    .AddRoles<IdentityRole>()
+//    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddScoped<SignInManager<LocalUser>>(); 
+builder.Services.AddScoped<UserManager<LocalUser>>();
+
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddControllersWithViews();
@@ -62,15 +75,9 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+app.MapRazorPages();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-app.MapRazorPages();
 
 app.Run();
-
-public class UserData
-{
-    public string UserName { get; set; }
-    public int PageSize { get; set; }
-}

@@ -32,6 +32,13 @@ header, footer {
     color:red;
 }
 
+.foter_padding{
+    padding:5px;
+    bottom:0;
+    width:100%;
+    position:fixed;
+}
+
 
 
 

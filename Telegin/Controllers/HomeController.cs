@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
+using Telegin.UI.Models;
 
 namespace Telegin.UI.Controllers
 {
@@ -21,6 +23,12 @@ namespace Telegin.UI.Controllers
         {
             ViewData["Lab2_Text"] = "Лабораторная работа №2";
             ViewBag.Item = new SelectList(_listData, "Id", "Name");
+
+            // Передадим данные для определения пользователя:
+            LocalUser localUser = new LocalUser();
+            string? NameRegistrView = TempData["Usersin"]!=null ? TempData["Usersin"].ToString() : 
+                "User@gmail.com";
+            ViewBag.Usersin = NameRegistrView;
             return View();
         }
     }

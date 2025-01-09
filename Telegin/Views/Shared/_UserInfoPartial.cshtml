@@ -1,28 +1,43 @@
-﻿@*
+﻿@using Telegin.UI.Controllers
+@using Telegin.UI.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+    @{ 
+        ViewData["Title"] = "Admin Dashboard";
+    }
+            @* Форма для авторизации: *@
 @{
+@model LocalUser
 }
     <a href="#" class="navbar-text ms-auto">
         00,0 руб <i class="fa-solid fa-cart-shopping"></i> (0)
     </a>
     <div class="dropdown ms-4 nav-color">
         <button class="btn btn-secondary dropdown-toggle"
-                type="button" id="dropdownMenuButton"
-                data-bs-toggle="dropdown"
-                aria-expanded="false">
-            User@gmail.com
+            type="button" id="dropdownMenuButton"
+            data-bs-toggle="dropdown"
+            aria-expanded="false">
+            @ViewBag.Usersin 
             <img src="Images/istockphoto-538748141-612x612.png" width="30"
-         alt="User"  class="rounded nav-color" />
+            alt="User"  class="rounded nav-color" />
         </button>
+
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <li>
-                <span class="dropdown-item-text">
+                    @* Переход на страницу с регистрацией использую teg-helpers *@
+            <a class="dropdown-item-text" asp-area="Identity" asp-page="/Account/Register">
+                        <img src="Images/istockphoto-538748141-612x612.png"
+                        width="30" alt="User" class="rounded" />
+                        Login
+                </a>
+               @*  <span class="dropdown-item-text">
                 <img src="Images/istockphoto-538748141-612x612.png"
                          width="30" alt="User" class="rounded" />
-                    user@gmail.com
-                </span>
-            </li>
+                    Login
+                </span> *@
+                </li>
             <li><hr class="dropdown-divider"></li>
             <li>
                 <form id="logoutForm" class="form-inline" action="#">

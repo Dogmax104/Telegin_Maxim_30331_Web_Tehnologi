@@ -17,7 +17,6 @@
         <link rel="stylesheet" href="~/font-awesome/css/all.css"/>
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css"/>
         <link rel="stylesheet" href="~/font-awesome/sprites/solid.svg"/>
-
     
     </head>
     <body>
@@ -28,7 +27,6 @@
             @await Html.PartialAsync("_MenuPartial")
             @* Here the end menu part1 _MenuPartial.cshtml *@
                 <!-- меню сайта - конец -->
-
                 <!-- Информация пользователя -->
             @* Here begin menu part2 _MenuPartial.cshtml *@
             @await Html.PartialAsync("_UserInfoPartial")
@@ -42,10 +40,7 @@
                 @RenderBody()
             </main>
         </div>
-
-
-
-        <footer class="border-top footer text-muted">
+        <footer class="border-top footer text-muted foter_padding">
             <div class="navbar navbar-dark navbar-expand-md bg-dark">
                 <div class="navbar-nav ms-auto">
                     <a class="nav-item nav-link" href="http://www.facebook.com">
@@ -60,9 +55,6 @@
                 </div>
             </div>
         </footer>
-    
-    
-    
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
